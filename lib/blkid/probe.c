@@ -35,6 +35,7 @@
 #include "blkidP.h"
 #include "uuid/uuid.h"
 #include "probe.h"
+int uuid_is_null(const uuid_t uu);
 
 static int figure_label_len(const unsigned char *label, int len)
 {

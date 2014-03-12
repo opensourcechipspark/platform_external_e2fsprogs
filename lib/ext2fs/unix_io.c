@@ -48,12 +48,14 @@
 #include <sys/resource.h>
 #endif
 
+#if 0 //zyf
 #if defined(__linux__) && defined(_IO) && !defined(BLKROGET)
 #define BLKROGET   _IO(0x12, 94) /* Get read-only status (0 = read_write).  */
 #endif
 
 #if defined(__linux__) && defined(_IO) && !defined(BLKSSZGET)
 #define BLKSSZGET  _IO(0x12,104)/* get block device sector size */
+#endif
 #endif
 
 #undef ALIGN_DEBUG
@@ -481,6 +483,27 @@ static errcode_t unix_open(const char *name, int flags, io_channel *channel)
 		retval = errno;
 		goto cleanup;
 	}
+    
+	data->align = 512; //zyf
+    
+#ifdef BLKSSZGET
+	if (flags & IO_FLAG_DIRECT_IO) {
+		if (ioctl(data->dev, BLKSSZGET, &data->align) != 0)
+			data->align = io->block_size;
+	}
+#endif
+
+#if defined(__CYGWIN__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+	/*
+	 * Some operating systems require that the buffers be aligned,
+	 * regardless of O_DIRECT
+	 */
+	data->align = 512;
+#endif
+
+
+	if ((retval = alloc_cache(io, data)))
+		goto cleanup;
 
 	if (f_nocache) {
 		if (fcntl(data->dev, f_nocache, 1) < 0) {

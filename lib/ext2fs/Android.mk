@@ -103,16 +103,20 @@ libext2fs_cflags_linux := \
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(libext2fs_system_shared_libraries) \
+        $(libext2fs_shared_libraries)
+
 LOCAL_SRC_FILES := $(libext2fs_src_files)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(libext2fs_system_shared_libraries)
-LOCAL_SHARED_LIBRARIES := $(libext2fs_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(libext2fs_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(libext2fs_shared_libraries)
 LOCAL_C_INCLUDES := $(libext2fs_c_includes)
 LOCAL_CFLAGS := $(libext2fs_cflags) $(libext2fs_cflags_linux)
-LOCAL_PRELINK_MODULE := false
+LOCAL_PRELINK_MODULE := true
 LOCAL_MODULE := libext2fs
 LOCAL_MODULE_TAGS := optional
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 

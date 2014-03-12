@@ -55,13 +55,19 @@ mke2fs_system_shared_libraries := libc
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(mke2fs_system_shared_libraries) \
+        $(mke2fs_shared_libraries)
+
 LOCAL_SRC_FILES := $(mke2fs_src_files)
 LOCAL_C_INCLUDES := $(mke2fs_c_includes)
 LOCAL_CFLAGS := $(mke2fs_cflags) $(mke2fs_cflags_linux)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(mke2fs_system_shared_libraries)
-LOCAL_SHARED_LIBRARIES := $(mke2fs_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(mke2fs_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(mke2fs_shared_libraries)
 LOCAL_MODULE := mke2fs
 LOCAL_MODULE_TAGS := optional
+LOCAL_FORCE_STATIC_EXECUTABLE := true
+LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT_SBIN)
 include $(BUILD_EXECUTABLE)
 
 include $(CLEAR_VARS)
@@ -132,11 +138,15 @@ tune2fs_system_shared_libraries := libc
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(tune2fs_shared_libraries) \
+        $(tune2fs_system_shared_libraries)
+
 LOCAL_SRC_FILES := $(tune2fs_src_files)
 LOCAL_C_INCLUDES := $(tune2fs_c_includes)
 LOCAL_CFLAGS := $(tune2fs_cflags)
-LOCAL_SHARED_LIBRARIES := $(tune2fs_shared_libraries)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(tune2fs_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(tune2fs_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(tune2fs_system_shared_libraries)
 LOCAL_MODULE := tune2fs
 LOCAL_MODULE_TAGS := optional
 
@@ -204,11 +214,15 @@ badblocks_system_shared_libraries := libc
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(badblocks_shared_libraries) \
+        $(badblocks_system_shared_libraries)
+
 LOCAL_SRC_FILES := $(badblocks_src_files)
 LOCAL_C_INCLUDES := $(badblocks_c_includes)
 LOCAL_CFLAGS := $(badblocks_cflags)
-LOCAL_SHARED_LIBRARIES := $(badblocks_shared_libraries)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(badblocks_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(badblocks_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(badblocks_system_shared_libraries)
 LOCAL_MODULE := badblocks
 LOCAL_MODULE_TAGS := optional
 
@@ -273,11 +287,15 @@ chattr_system_shared_libraries := libc
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(chattr_shared_libraries) \
+        $(chattr_system_shared_libraries)
+
 LOCAL_SRC_FILES := $(chattr_src_files)
 LOCAL_C_INCLUDES := $(chattr_c_includes)
 LOCAL_CFLAGS := $(chattr_cflags)
-LOCAL_SHARED_LIBRARIES := $(chattr_shared_libraries)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(chattr_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(chattr_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(chattr_system_shared_libraries)
 LOCAL_MODULE := chattr
 LOCAL_MODULE_TAGS := optional
 
@@ -342,11 +360,15 @@ lsattr_system_shared_libraries := libc
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(lsattr_shared_libraries) \
+        $(lsattr_system_shared_libraries)
+
 LOCAL_SRC_FILES := $(lsattr_src_files)
 LOCAL_C_INCLUDES := $(lsattr_c_includes)
 LOCAL_CFLAGS := $(lsattr_cflags)
-LOCAL_SHARED_LIBRARIES := $(lsattr_shared_libraries)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(lsattr_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(lsattr_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(lsattr_system_shared_libraries)
 LOCAL_MODULE := lsattr
 LOCAL_MODULE_TAGS := optional
 
@@ -407,18 +429,24 @@ blkid_shared_libraries := \
     libext2fs \
     libext2_blkid \
     libext2_com_err \
+    libext2_uuid \
     libext2_e2p
 
 blkid_system_shared_libraries := libc
 
 include $(CLEAR_VARS)
 
+LOCAL_STATIC_LIBRARIES := \
+        $(blkid_shared_libraries) \
+        $(blkid_system_shared_libraries)
+
 LOCAL_SRC_FILES := $(blkid_src_files)
 LOCAL_C_INCLUDES := $(blkid_c_includes)
 LOCAL_CFLAGS := $(blkid_cflags)
-LOCAL_SHARED_LIBRARIES := $(blkid_shared_libraries)
-LOCAL_SYSTEM_SHARED_LIBRARIES := $(blkid_system_shared_libraries)
+#LOCAL_SHARED_LIBRARIES := $(blkid_shared_libraries)
+#LOCAL_SYSTEM_SHARED_LIBRARIES := $(blkid_system_shared_libraries)
 LOCAL_MODULE := blkid
 LOCAL_MODULE_TAGS := optional
+LOCAL_FORCE_STATIC_EXECUTABLE := true
 
 include $(BUILD_EXECUTABLE)
